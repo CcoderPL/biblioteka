@@ -27,11 +27,7 @@
       <meta http-http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 </head>
 <body>
-    <form action="zaloguj.php" method="post">
-      Login: <br /> <input type="text" name="login"/><br/>
-      Hasło: <br /> <input type="password" name="password"/><br/><br />
-                    <input type="submit" value="Zaloguj"/>
-    </form>
+    <div id="logowanie" style="margin-left:90%;"><a href="logowanie.php">Zaloguj się</a></div>
     <br/><br />
     <table width="70%" align="center" border="1">
           <tr>
