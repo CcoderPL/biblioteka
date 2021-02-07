@@ -1,18 +1,24 @@
 <?php
       session_start();
+      //jeśli istnieje zmienna zalogowany to wtedy już ktoś się zalogował i nie wyświetlamy mu wtedy ekranu logowania tylko przyznajemy
+      //mu dostęp do strony
       if(isset($_SESSION['zalogowany']) && ($_SESSION['zalogowany']==true))
       {
             header('Location: wypozyczalnia.php');
             exit();
       }
+      //wymaganie pliku konfiguracyjnego do połączenia z bazą MySQL
       require_once 'connect.php';
+      //utworzenie zmiennej do weryfikacji połączenia z bazą
       $polaczenie = @new mysqli($host, $db_user, $db_password, $db_name);
+      //przepuszczenie jej przez funkcję zabezpieczającą wstrzykiwanie SQL
       mysqli_query($polaczenie, "SET CHARSET utf8");
       mysqli_query($polaczenie, "SET NAMES 'utf8' COLLATE 'utf8_polish_ci'");
-
+      //zapytanie można wysłać za pomocą zmiennej jak w tym przypadku $zapytanie albo bezpośredno wpisać po przecinku
       $zapytanie = "SELECT title, author, description, available FROM ksiazki";
-
+      //wysłanie zapytania do bazy, konieczne jest do tego korzystanie z zmiennej weryfikującej połączenie z bazą
       $rezultat = mysqli_query($polaczenie, $zapytanie);
+      //zmienna potrzebna do wykonania pętli, sprawdza ile rzędów zwróciło zapytanie
       $ile = mysqli_num_rows($rezultat);
 
  ?>
@@ -37,13 +43,17 @@
                 <th width="5%">Wypożycz</th>
           </tr>
     <?php
+      //sprawdzanie czy taka zmienna jest ustawiona w sesji, jest to dla nowo wchodzących na stronę
       if(isset($_SESSION['blad']))	echo $_SESSION['blad'];
+      //wyświetlanie wyników gdy zmienna ile zwróciła przynajmniej 1 rząd
       if ($ile>=1)
       {
+            //pętle wyświetlająca wszystkie zwrócone z zapytania wpisy
       	for ($i = 1; $i <= $ile; $i++)
       	{
-
+                  //pobranie rzędu jako tablicę asocjacyjną
       		$row = mysqli_fetch_assoc($rezultat);
+                  //przypisanie każdej kolumny do odpowiedniej zmiennej
       		$title = $row['title'];
       		$author = $row['author'];
       		$description = $row['description'];
