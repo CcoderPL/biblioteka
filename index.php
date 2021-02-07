@@ -40,7 +40,7 @@
                 <th width="30%">Tytuł</th>
                 <th width="30%">Autor</th>
                 <th width="35%">Opis</th>
-                <th width="5%">Wypożycz</th>
+                <th width="5%">Dostępność</th>
           </tr>
     <?php
       //sprawdzanie czy taka zmienna jest ustawiona w sesji, jest to dla nowo wchodzących na stronę
@@ -59,21 +59,24 @@
       		$description = $row['description'];
       		$available = $row['available'];
 
-                  echo<<<END
-                  <tr>
-                        <th> $title</th>
-                        <th> $author</th>
-                        <th> $description</th>
-                        <th>
-                              <form action="wypozyczalnia.php" method="post">
-                              	<select name="borrow">
-                              		<option>NIE</option>
-                              		<option>TAK</option>
-                              	</select>
-                              </form>
-                        </th>
-                  </tr>
-                  END;
+                  echo
+                  "<tr>
+                        <th> ".$title." </th>
+                        <th> ".$author." </th>
+                        <th> ".$description." </th>
+                        <th>";
+                              if($available==1)
+                              {
+                                    echo "TAK";
+                              }
+                              else
+                              {
+                                    echo "NIE";
+                              }
+                        "</th>
+                  </tr>";
+
+
             }
       }
       //wyswietlenie 1 rekordu -- dramat
