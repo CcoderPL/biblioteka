@@ -2,11 +2,11 @@
       session_start();
       //jeśli istnieje zmienna zalogowany to wtedy już ktoś się zalogował i nie wyświetlamy mu wtedy ekranu logowania tylko przyznajemy
       //mu dostęp do strony
-      if(isset($_SESSION['zalogowany']) && ($_SESSION['zalogowany']==true))
-      {
-            header('Location: wypozyczalnia.php');
-            exit();
-      }
+      //if(isset($_SESSION['zalogowany']) && ($_SESSION['zalogowany']==true))
+//      {
+//            header('Location: wypozyczalnia.php');
+//            exit();
+//      }
       //wymaganie pliku konfiguracyjnego do połączenia z bazą MySQL
       require_once 'connect.php';
       //utworzenie zmiennej do weryfikacji połączenia z bazą
@@ -33,14 +33,30 @@
       <meta http-http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 </head>
 <body>
-    <div id="logowanie" style="margin-left:90%;"><a href="logowanie.php">Zaloguj się</a></div>
+      <?php
+            if(isset($_SESSION['zalogowany']) && ($_SESSION['zalogowany']==true))
+            {
+                  echo "<div id='logowanie' style='margin-left:90%;'><a href='logout.php'>Wyloguj się!</a></div>";
+            }
+            else
+            {
+                  echo "<div id='logowanie' style='margin-left:90%;'><a href='logowanie.php'>Zaloguj się</a></div>";
+            }
+
+      ?>
     <br/><br />
-    <table width="70%" align="center" border="1">
+    <table width="1000px" align="center" border="1">
           <tr>
-                <th width="30%">Tytuł</th>
-                <th width="30%">Autor</th>
-                <th width="35%">Opis</th>
-                <th width="5%">Dostępność</th>
+                <th width="250px">Tytuł</th>
+                <th width="250px">Autor</th>
+                <th width="300px">Opis</th>
+                <th width="100px">Dostępność</th>
+                <?php
+                if(isset($_SESSION['zalogowany']) && ($_SESSION['zalogowany']==true))
+                {
+                    echo "<th width='100px'>Wypożycz</th>";
+                }
+                  ?>
           </tr>
     <?php
       //sprawdzanie czy taka zmienna jest ustawiona w sesji, jest to dla nowo wchodzących na stronę
@@ -73,8 +89,19 @@
                               {
                                     echo "NIE";
                               }
-                        "</th>
-                  </tr>";
+                        "</th>";
+                        if(isset($_SESSION['zalogowany']) && ($_SESSION['zalogowany']==true))
+                        {
+                              echo "<th>
+                              <form action='wypozyczalnia.php' method='post'>
+                                   <select name='borrow'>
+                                         <option>NIE</option>
+                                         <option>TAK</option>
+                                    </select>
+                              </form>
+                              </th>";
+                        }
+                  "</tr>";
 
 
             }

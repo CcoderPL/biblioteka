@@ -22,13 +22,7 @@
 
       	echo "<p>Witaj ".$_SESSION['user'].'! [ <a href="logout.php">Wyloguj się!</a> ]</p>';
 
-            //<form action="wypozyczalnia.php" method="post">
-            //      <select name="borrow">
-            //            <option>NIE</option>
-            //            <option>TAK</option>
-            //      </select>
-            //</form>
-
+            
       ?>
 
 

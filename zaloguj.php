@@ -68,7 +68,7 @@
                         unset($_SESSION['blad']);
                         //czyszczenie pobranych danych z wiersza !! czyszczenie pamięci
                         $rezultat->close();
-                        header('Location:wypozyczalnia.php');
+                        header('Location:index.php');
                   }
 
                   //natomiast jeżeli nie ma takiego usera to przejdziemy do else
