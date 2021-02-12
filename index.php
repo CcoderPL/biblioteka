@@ -15,7 +15,7 @@
       mysqli_query($polaczenie, "SET CHARSET utf8");
       mysqli_query($polaczenie, "SET NAMES 'utf8' COLLATE 'utf8_polish_ci'");
       //zapytanie można wysłać za pomocą zmiennej jak w tym przypadku $zapytanie albo bezpośredno wpisać po przecinku
-      $zapytanie = "SELECT title, author, description, available FROM ksiazki";
+      $zapytanie = "SELECT bookid, title, author, description, available FROM ksiazki";
       //wysłanie zapytania do bazy, konieczne jest do tego korzystanie z zmiennej weryfikującej połączenie z bazą
       $rezultat = mysqli_query($polaczenie, $zapytanie);
       //zmienna potrzebna do wykonania pętli, sprawdza ile rzędów zwróciło zapytanie
@@ -33,7 +33,10 @@
       <meta http-http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 </head>
 <body>
+
       <?php
+      //wyświetlanie opcji zależnie od stanu zalogowania - jeśli niezalogowany to wyświetl możliwość logowania, w przeciwnym razie możliwość
+      //wyloogowania
             if(isset($_SESSION['zalogowany']) && ($_SESSION['zalogowany']==true))
             {
                   echo "<div id='logowanie' style='margin-left:90%;'><a href='logout.php'>Wyloguj się!</a></div>";
@@ -45,18 +48,14 @@
 
       ?>
     <br/><br />
+    <form action='wypozyczalnia.php' method='post'>
     <table width="1000px" align="center" border="1">
           <tr>
                 <th width="250px">Tytuł</th>
                 <th width="250px">Autor</th>
                 <th width="300px">Opis</th>
-                <th width="100px">Dostępność</th>
-                <?php
-                if(isset($_SESSION['zalogowany']) && ($_SESSION['zalogowany']==true))
-                {
-                    echo "<th width='100px'>Wypożycz</th>";
-                }
-                  ?>
+                <th width="200px">Dostępność</th>
+
           </tr>
     <?php
       //sprawdzanie czy taka zmienna jest ustawiona w sesji, jest to dla nowo wchodzących na stronę
@@ -76,45 +75,40 @@
       		$available = $row['available'];
 
                   echo
-                  "<tr>
-                        <th> ".$title." </th>
-                        <th> ".$author." </th>
-                        <th> ".$description." </th>
-                        <th>";
-                              if($available==1)
-                              {
-                                    echo "TAK";
-                              }
-                              else
-                              {
-                                    echo "NIE";
-                              }
-                        "</th>";
-                        if(isset($_SESSION['zalogowany']) && ($_SESSION['zalogowany']==true))
+                        "<tr>
+                              <td> ".$title." </td>
+                              <td> ".$author." </td>
+                              <td> ".$description." </td>
+                              <td>";
+                                    if($available==1)
+                                    {
+                                          echo "TAK";
+                                    }
+                                    else
+                                    {
+                                          echo "NIE";
+                                    }
+                              "</td>
+                        </tr>";
+                        if(isset($_SESSION['zalogowany']) && ($_SESSION['zalogowany']==true) && $available==1)
                         {
                               echo "<th>
-                              <form action='wypozyczalnia.php' method='post'>
-                                   <select name='borrow'>
-                                         <option>NIE</option>
-                                         <option>TAK</option>
-                                    </select>
-                              </form>
-                              </th>";
+                               <select name='idksiazki[]' value=' . $i . ' />
+                                     <option>NIE</option>
+                                     <option>TAK</option>
+                                </select>";
                         }
-                  "</tr>";
-
-
             }
-      }
-      //wyswietlenie 1 rekordu -- dramat
-      /*$result = mysqli_query($polaczenie, "SELECT title FROM ksiazki WHERE bookid=1") or die("Problemy z odczytem danych!");
-      while ($row = $result->fetch_assoc())
-      {
-            echo $row['title']."<br>";
-      }*/
-
-
-      ?>
+      }?>
       </table>
+      <?php
+      if(isset($_SESSION['zalogowany']) && ($_SESSION['zalogowany']==true))
+      {
+            echo "<br /> <input type='submit' name='zapis' value='wypożyczam'></form>";
+      }
+      ?>
+      </form>
+
+
 </body>
 </html>

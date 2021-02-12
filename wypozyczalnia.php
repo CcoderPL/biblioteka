@@ -21,8 +21,11 @@
       <?php
 
       	echo "<p>Witaj ".$_SESSION['user'].'! [ <a href="logout.php">Wyloguj się!</a> ]</p>';
+            foreach($_POST['idksiazki'] as $id)
+            {
+                  echo $id;
+            }
 
-            
       ?>
 
 
