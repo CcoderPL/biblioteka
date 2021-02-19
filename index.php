@@ -15,14 +15,13 @@
       mysqli_query($polaczenie, "SET CHARSET utf8");
       mysqli_query($polaczenie, "SET NAMES 'utf8' COLLATE 'utf8_polish_ci'");
       //zapytanie można wysłać za pomocą zmiennej jak w tym przypadku $zapytanie albo bezpośredno wpisać po przecinku
-      $zapytanie = "SELECT ksiazki.bookid, ksiazki.title, ksiazki.author, ksiazki.description, ksiazki.available, uzytkownicy.userid,
-      wypozyczenia.borrowid FROM ksiazki, uzytkownicy, wypozyczenia WHERE uzytkownicy.userid = wypozyczenia.userid
-      AND ksiazki.bookid = wypozyczenia.bookid ";
-
+      $zapytanieKsiazki = "SELECT ksiazki.bookid, ksiazki.title, ksiazki.author, ksiazki.description, ksiazki.available FROM ksiazki";
+      $zapytanieUzytkownicy = "SELECT uzytkownicy.userid FROM uzytkownicy";
       //wysłanie zapytania do bazy, konieczne jest do tego korzystanie z zmiennej weryfikującej połączenie z bazą
-      $rezultat = mysqli_query($polaczenie, $zapytanie);
+      $rezultatKsiazki = mysqli_query($polaczenie, $zapytanieKsiazki);
+      $rezultatUzytkownicy = mysqli_query($polaczenie, $zapytanieUzytkownicy);
       //zmienna potrzebna do wykonania pętli, sprawdza ile rzędów zwróciło zapytanie
-      $ile = mysqli_num_rows($rezultat);
+      $ile = mysqli_num_rows($rezultatKsiazki);
 
  ?>
  <!DOCTYPE HTML>
@@ -48,7 +47,8 @@
             {
                   echo "<div id='logowanie' style='margin-left:90%;'><a href='logowanie.php'>Zaloguj się</a></div>";
             }
-
+            //sprawdzanie czy taka zmienna jest ustawiona w sesji, jest to dla nowo wchodzących na stronę
+            if(isset($_SESSION['blad']))	echo $_SESSION['blad'];
       ?>
     <br/><br />
     <form action='wypozyczalnia.php' method='post'>
@@ -62,48 +62,47 @@
 
           </tr>
     <?php
-      //sprawdzanie czy taka zmienna jest ustawiona w sesji, jest to dla nowo wchodzących na stronę
-      if(isset($_SESSION['blad']))	echo $_SESSION['blad'];
-
-
-      //tworzenie klasy
-      class wpis
+      //tworzenie klas
+      class ksiazka
       {
-            //przypisanie każdej kolumny do odpowiedniej zmiennej
             public $title;
             public $author;
             public $description;
             public $available;
             public $bookid;
-
-
-            /*public
-            //przypisanie każdej kolumny do odpowiedniej zmiennej
-            $title = $row['title'];
-            $author = $row['author'];
-            $description = $row['description'];
-            $available = $row['available'];
-            $_SESSION['bookid'] = $row['bookid'];
-            $bookid = $row['bookid'];*/
       };
+
+      class uzytkownik
+      {
+            public $userid;
+            public $user;
+      };
+      //wywołanie zapytania aby uzyskać aktualny id użytkownika
+      $row2 = mysqli_fetch_assoc($rezultatUzytkownicy);
+      $_SESSION['userid'] = $row2['userid'];
       //wyświetlanie wyników gdy zmienna ile zwróciła przynajmniej 1 rząd
       if ($ile>=1)
       {
+            //utworzenie obiektu klasy
+            $ksiazka = new ksiazka();
             //pętle wyświetlająca wszystkie zwrócone z zapytania wpisy
       	for ($i = 1; $i <= $ile; $i++)
       	{
                   //pobranie rzędu jako tablicę asocjacyjną
-                  $row = mysqli_fetch_assoc($rezultat);
-                  $test = new wpis();
-                  $this->title = $row['title']);
-
+                  $row = mysqli_fetch_assoc($rezultatKsiazki);
+                  //przypisanie zmiennych
+                  $ksiazka->title = $row['title'];
+                  $ksiazka->author = $row['author'];
+                  $ksiazka->description = $row['description'];
+                  $ksiazka->available = $row['available'];
+                  $ksiazka->bookid = $row['bookid'];
                   echo
                         "<tr>
-                              <td> ".$title." </td>
-                              <td> ".$author." </td>
-                              <td> ".$description." </td>
+                              <td> ".$ksiazka->title." </td>
+                              <td> ".$ksiazka->author." </td>
+                              <td> ".$ksiazka->description." </td>
                               <td>";
-                                    if($available==1)
+                                    if($ksiazka->available==1)
                                     {
                                           echo "TAK";
                                     }
@@ -114,19 +113,12 @@
                               "</td>
                         </tr>";
                         //jeżeli użytkownik zalogowany i książka jest dostępna to wyświetl pole wyboru z wypożyczeniem
-                        if(isset($_SESSION['zalogowany']) && ($_SESSION['zalogowany']==true) && $available==1)
+                        if(isset($_SESSION['zalogowany']) && ($_SESSION['zalogowany']==true) && $ksiazka->available==1)
                         {
                               echo "<td>
-                                           <input type='checkbox' name='idksiazki[]' value='$bookid' />
-
+                                           <input type='checkbox' name='idksiazki[]' value='$ksiazka->bookid' />
                                 </td>";
-
                         }
-
-                        /*if("idksiazki[]=='TAK'")
-                        {
-                              $wypozyczenie = @mysqli_query($polaczenie,("INSERT INTO wypozyczenia VALUES (NULL, 33, 5, '2021-02-15 14:04:50')"));
-                        }*/
             }
       }?>
       </table>
@@ -137,7 +129,5 @@
       }
       ?>
       </form>
-
-
 </body>
 </html>
