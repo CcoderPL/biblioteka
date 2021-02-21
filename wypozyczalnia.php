@@ -12,14 +12,8 @@
       //przepuszczenie jej przez funkcję zabezpieczającą wstrzykiwanie SQL
       mysqli_query($polaczenie, "SET CHARSET utf8");
       mysqli_query($polaczenie, "SET NAMES 'utf8' COLLATE 'utf8_polish_ci'");
+?>
 
-      $zapytanieWypozyczenia = "SELECT wypozyczenia.userid, wypozyczenia.bookid, wypozyczenia.borrowid, ksiazki.bookid, ksiazki.title, uzytkownicy.user, uzytkownicy.userid
-      FROM wypozyczenia, ksiazki, uzytkownicy WHERE uzytkownicy.userid = wypozyczenia.userid AND ksiazki.bookid = wypozyczenia.bookid";
-      //wysłanie zapytania do bazy, konieczne jest do tego korzystanie z zmiennej weryfikującej połączenie z bazą
-      $rezultatWypozyczenia = mysqli_query($polaczenie, $zapytanieWypozyczenia);
-      //zmienna potrzebna do wykonania pętli, sprawdza ile rzędów zwróciło zapytanie
-      $ile = mysqli_num_rows($rezultatWypozyczenia);
- ?>
  <!DOCTYPE HTML>
  <html lang="pl" >
  <head>
@@ -32,28 +26,26 @@
 </head>
 <body>
       <?php
+
+
             //opcja wylogowania
       	echo "<p>Witaj ".$_SESSION['user'].'! [ <a href="logout.php">Wyloguj się!</a> ]</p>';
             echo "<br /> Masz wypożyczne następujące książki : <br />";
-            //pętla dodająca każdego checkboxa z wypożyczeniem z pliku index do tabeli wypożyczenie
-            foreach($_POST['idksiazki'] as $id)
-            {
-                  //polaczenie z baza rownoczesnie z wyslaniem wpisu do tabeli
-                  $wypozyczenie = @mysqli_query($polaczenie,("INSERT INTO wypozyczenia VALUES (NULL, {$_SESSION['userid']}, $id , CURRENT_TIMESTAMP)"));
-                  if($wypozyczenie)
-                  {
-                        $wypozyczona = @mysqli_query($polaczenie,("UPDATE ksiazki SET available=0 WHERE bookid=$id"));
-                  }
-                  else
-                  {
-                        echo "Błąd nie udało się dodać nowego rekordu";
-                  }
-            }
+
+            $zapytanieWypozyczenia = "SELECT wypozyczenia.userid, wypozyczenia.bookid, ksiazki.bookid, ksiazki.title, uzytkownicy.user, uzytkownicy.userid
+            FROM wypozyczenia, ksiazki, uzytkownicy WHERE uzytkownicy.userid = wypozyczenia.userid AND
+            ksiazki.bookid = wypozyczenia.bookid AND wypozyczenia.userid = {$_SESSION['userid']}";
+
+            //wysłanie zapytania do bazy, konieczne jest do tego korzystanie z zmiennej weryfikującej połączenie z bazą
+            $rezultatWypozyczenia = mysqli_query($polaczenie, $zapytanieWypozyczenia);
+
+            //zmienna potrzebna do wykonania pętli, sprawdza ile rzędów zwróciło zapytanie
+            $ile = mysqli_num_rows($rezultatWypozyczenia);
             if ($ile>=1)
             {
                   //pętle wyświetlająca wszystkie zwrócone z zapytania wpisy
-            	for ($i = 1; $i <= $ile; $i++)
-            	{
+                  for ($i = 1; $i <= $ile; $i++)
+                  {
                         //pobranie rzędu jako tablicę asocjacyjną
                         $row = mysqli_fetch_assoc($rezultatWypozyczenia);
                         //przypisanie zmiennych
@@ -61,6 +53,7 @@
                         echo $title. "<br />";
                   }
             }
+
             /*
             //wyswietlenie 1 rekordu -- dramat
             echo $_SESSION['user'];

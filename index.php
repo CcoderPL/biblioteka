@@ -16,10 +16,8 @@
       mysqli_query($polaczenie, "SET NAMES 'utf8' COLLATE 'utf8_polish_ci'");
       //zapytanie można wysłać za pomocą zmiennej jak w tym przypadku $zapytanie albo bezpośredno wpisać po przecinku
       $zapytanieKsiazki = "SELECT ksiazki.bookid, ksiazki.title, ksiazki.author, ksiazki.description, ksiazki.available FROM ksiazki";
-      $zapytanieUzytkownicy = "SELECT uzytkownicy.userid FROM uzytkownicy";
       //wysłanie zapytania do bazy, konieczne jest do tego korzystanie z zmiennej weryfikującej połączenie z bazą
       $rezultatKsiazki = mysqli_query($polaczenie, $zapytanieKsiazki);
-      $rezultatUzytkownicy = mysqli_query($polaczenie, $zapytanieUzytkownicy);
       //zmienna potrzebna do wykonania pętli, sprawdza ile rzędów zwróciło zapytanie
       $ile = mysqli_num_rows($rezultatKsiazki);
 
@@ -51,7 +49,7 @@
             if(isset($_SESSION['blad']))	echo $_SESSION['blad'];
       ?>
     <br/><br />
-    <form action='wypozyczalnia.php' method='post'>
+    <form action='wypozyczenie.php' method='post'>
     <table width="1000px" align="center" border="1">
           <tr>
                 <th width="250px">Tytuł</th>
@@ -72,14 +70,7 @@
             public $bookid;
       };
 
-      class uzytkownik
-      {
-            public $userid;
-            public $user;
-      };
-      //wywołanie zapytania aby uzyskać aktualny id użytkownika
-      $row2 = mysqli_fetch_assoc($rezultatUzytkownicy);
-      $_SESSION['userid'] = $row2['userid'];
+
       //wyświetlanie wyników gdy zmienna ile zwróciła przynajmniej 1 rząd
       if ($ile>=1)
       {
@@ -127,6 +118,8 @@
       {
             echo "<br /> <input type='submit' name='zapis' value='wypożyczam'></form>";
       }
+
+
       ?>
       </form>
 </body>

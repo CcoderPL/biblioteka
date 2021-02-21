@@ -61,8 +61,9 @@
                         $wiersz = $rezultat->fetch_assoc();
 
                         //niejawne przesłanie zmiennej globalnie do innego pliku php można skorzystać z SESSION
-                        $_SESSION['id'] = $wiersz['id'];
-				$_SESSION['user'] = $wiersz['user'];
+                        //$_SESSION['id'] = $wiersz['id'];
+                        $_SESSION['user'] = $wiersz['user'];
+				$_SESSION['userid'] = $wiersz['userid'];
 
                         //jeśli udało nam się zalogować to usuńmy całkowicie zmienną błąd z sesji
                         unset($_SESSION['blad']);
