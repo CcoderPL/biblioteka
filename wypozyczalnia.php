@@ -31,7 +31,7 @@
             //opcja wylogowania
       	echo "<p>Witaj ".$_SESSION['user'].'! [ <a href="logout.php">Wyloguj się!  </a> ] <a href="index.php">Strona Główna</a></p>';
 
-            $zapytanieWypozyczenia = "SELECT wypozyczenia.borrowdate, wypozyczenia.userid, wypozyczenia.bookid, ksiazki.bookid, ksiazki.title, uzytkownicy.user, uzytkownicy.userid
+            $zapytanieWypozyczenia = "SELECT wypozyczenia.borrowid, wypozyczenia.borrowdate, wypozyczenia.userid, wypozyczenia.bookid, ksiazki.bookid, ksiazki.title, uzytkownicy.user, uzytkownicy.userid
             FROM wypozyczenia, ksiazki, uzytkownicy WHERE uzytkownicy.userid = wypozyczenia.userid AND
             ksiazki.bookid = wypozyczenia.bookid AND wypozyczenia.userid = {$_SESSION['userid']}";
 
@@ -50,7 +50,7 @@
 
            </tr>
       <?php
-            //okodować cały zwrot i uporzadkować tabelę w indexie
+            //okodować cały zwrot i uporzadkować tabelę w indexie !!!!!!!!!!!!!!!!!
             if ($ile>=1)
             {
                   //pętle wyświetlająca wszystkie zwrócone z zapytania wpisy
@@ -61,12 +61,13 @@
                         //przypisanie zmiennych
                         $title = $row['title'];
                         $date = $row['borrowdate'];
+                        $bookid = $row['bookid'];
                         echo
                               "<tr>
                                     <td> ".$title." </td>
                                     <td> ".$date." </td>
                                     <td>
-                                          <input type='checkbox' name='idzwrotu' value='' />
+                                          <input type='checkbox' name='idzwroconejksiazki[]' value='$bookid' />
                                     </td>
                               </tr>";
                   }
