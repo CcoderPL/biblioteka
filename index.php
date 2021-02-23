@@ -110,13 +110,22 @@
                                            <input type='checkbox' name='idksiazki[]' value='$ksiazka->bookid' />
                                 </td>";
                         }
+                        else
+                        {
+                              echo "<td> * </td>";
+                        }
             }
       }?>
       </table>
       <?php
+
       if(isset($_SESSION['zalogowany']) && ($_SESSION['zalogowany']==true))
       {
+
             echo "<br /> <input type='submit' name='zapis' value='wypożyczam'></form>";
+      }
+      else {
+            echo "* Musisz być zalogowany aby móc wypożyczyć <br />";
       }
 
 

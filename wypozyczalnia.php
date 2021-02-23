@@ -42,17 +42,18 @@
             $ile = mysqli_num_rows($rezultatWypozyczenia);
       ?>
       <form action='zwrot.php' method='post'>
-      <table width="600px" align="center" border="1">
-           <tr>
-                  <th width="250px">Tytuł</th>
-                  <th width="250px">Data wypożyczenia</th>
-                  <th width="100px">Zwróć</th>
 
-           </tr>
       <?php
             //okodować cały zwrot i uporzadkować tabelę w indexie !!!!!!!!!!!!!!!!!
             if ($ile>=1)
             {
+                  echo "<table width='600px' align='center' border='1'>
+                       <tr>
+                              <th width='250px'>Tytuł</th>
+                              <th width='250px'>Data wypożyczenia</th>
+                              <th width='100px'>Zwróć</th>
+
+                       </tr>";
                   //pętle wyświetlająca wszystkie zwrócone z zapytania wpisy
                   for ($i = 1; $i <= $ile; $i++)
                   {
@@ -72,8 +73,15 @@
                               </tr>";
                   }
             }
-            echo "<br /> <input type='submit' name='zapis' value='Zwracam'></form>";
+            else
+            {
+                  echo "Aktualnie nie masz wypożyczonej żadnej książki";
+            }
 
+            if ($ile>=1)
+            {
+                  echo "<br /> <input type='submit' name='zapis' value='Zwracam'></form>";
+            }
 
             /*
             //wyswietlenie 1 rekordu -- dramat
