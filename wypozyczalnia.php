@@ -29,10 +29,9 @@
 
 
             //opcja wylogowania
-      	echo "<p>Witaj ".$_SESSION['user'].'! [ <a href="logout.php">Wyloguj się!</a> ]</p>';
-            echo "<br /> Masz wypożyczne następujące książki : <br />";
+      	echo "<p>Witaj ".$_SESSION['user'].'! [ <a href="logout.php">Wyloguj się!  </a> ] <a href="index.php">Strona Główna</a></p>';
 
-            $zapytanieWypozyczenia = "SELECT wypozyczenia.userid, wypozyczenia.bookid, ksiazki.bookid, ksiazki.title, uzytkownicy.user, uzytkownicy.userid
+            $zapytanieWypozyczenia = "SELECT wypozyczenia.borrowdate, wypozyczenia.userid, wypozyczenia.bookid, ksiazki.bookid, ksiazki.title, uzytkownicy.user, uzytkownicy.userid
             FROM wypozyczenia, ksiazki, uzytkownicy WHERE uzytkownicy.userid = wypozyczenia.userid AND
             ksiazki.bookid = wypozyczenia.bookid AND wypozyczenia.userid = {$_SESSION['userid']}";
 
@@ -41,6 +40,17 @@
 
             //zmienna potrzebna do wykonania pętli, sprawdza ile rzędów zwróciło zapytanie
             $ile = mysqli_num_rows($rezultatWypozyczenia);
+      ?>
+      <form action='zwrot.php' method='post'>
+      <table width="600px" align="center" border="1">
+           <tr>
+                  <th width="250px">Tytuł</th>
+                  <th width="250px">Data wypożyczenia</th>
+                  <th width="100px">Zwróć</th>
+
+           </tr>
+      <?php
+            //okodować cały zwrot i uporzadkować tabelę w indexie
             if ($ile>=1)
             {
                   //pętle wyświetlająca wszystkie zwrócone z zapytania wpisy
@@ -50,9 +60,19 @@
                         $row = mysqli_fetch_assoc($rezultatWypozyczenia);
                         //przypisanie zmiennych
                         $title = $row['title'];
-                        echo $title. "<br />";
+                        $date = $row['borrowdate'];
+                        echo
+                              "<tr>
+                                    <td> ".$title." </td>
+                                    <td> ".$date." </td>
+                                    <td>
+                                          <input type='checkbox' name='idzwrotu' value='' />
+                                    </td>
+                              </tr>";
                   }
             }
+            echo "<br /> <input type='submit' name='zapis' value='Zwracam'></form>";
+
 
             /*
             //wyswietlenie 1 rekordu -- dramat
@@ -68,6 +88,6 @@
       ?>
 
 
-
+      </form>
 </body>
 </html>

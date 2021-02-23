@@ -39,7 +39,7 @@
       //wyloogowania
             if(isset($_SESSION['zalogowany']) && ($_SESSION['zalogowany']==true))
             {
-                  echo "<div id='logowanie' style='margin-left:90%;'><a href='logout.php'>Wyloguj się!</a></div>";
+                  echo "<div id='logowanie' style='margin-left:80%;'><a href='wypozyczalnia.php'>Wypożyczalnia</a> &nbsp;&nbsp; <a href='logout.php'>Wyloguj się!</a></div>";
             }
             else
             {
