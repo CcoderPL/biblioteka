@@ -44,7 +44,7 @@
       <form action='zwrot.php' method='post'>
 
       <?php
-            //okodować cały zwrot i uporzadkować tabelę w indexie !!!!!!!!!!!!!!!!!
+            // uporzadkować tabelę w indexie !!!!!!!!!!!!!!!!!
             if ($ile>=1)
             {
                   echo "<table width='600px' align='center' border='1'>
