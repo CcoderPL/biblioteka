@@ -7,11 +7,12 @@
       <meta name="keywords" content="" />
       <!-- teraz tag dla Internet explorera -->
       <meta http-http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+      <link rel="stylesheet" href="css/style.css" type="text/css" />
 </head>
 <body>
       <form action="zaloguj.php" method="post">
-        Login: <br /> <input type="text" name="login"/><br/>
-        Hasło: <br /> <input type="password" name="password"/><br/><br />
+       <br /> <input type="text" name="login" placeholder="Login"/><br/>
+       <br /> <input type="password" name="password" placeholder="Hasło"/><br/><br />
                       <input type="submit" value="Zaloguj"/>
       </form>
 </body>

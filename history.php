@@ -22,6 +22,7 @@
              <meta name="keywords" content="książka, biblioteka, biblioteka online, Paweł Mołek, wypożyczalnia, książki" />
             <!-- teraz tag dla Internet explorera -->
             <meta http-http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+            <link rel="stylesheet" href="css/style.css" type="text/css" />
       </head>
       <body>
             <?php

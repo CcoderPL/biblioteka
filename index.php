@@ -1,4 +1,7 @@
 <?php
+      //POZAMYKAĆ WSZYSTKIE POŁĄCZENIA Z BAZĄ DANYCH
+      //POSPRAWDZAĆ WSZYSTKIE PRZEKIEROWANIA Z INDEXU I LOGOWANIA BO PRZY PRÓBIE LOGOWANIA I PODANIU BŁĘDNYCH DANYCH PRZERZUCA DO INDEXU
+      //ZROBIĆ Z TYM PORZADEK
       //dzięki zmiennej sesyjnej jest możliwość przekazywania zmiennych np. loginu i hasła, używamy wtedy $_SESSION['nazwa_zmiennej']
       session_start();
       //jeśli istnieje zmienna zalogowany to wtedy już ktoś się zalogował i nie wyświetlamy mu wtedy ekranu logowania tylko przyznajemy
@@ -34,6 +37,7 @@
              <meta name="keywords" content="książka, biblioteka, biblioteka online, Paweł Mołek, wypożyczalnia, książki" />
             <!-- teraz tag dla Internet explorera -->
             <meta http-http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+            <link rel="stylesheet" href="css/style.css" type="text/css" />
       </head>
       <body>
             <?php

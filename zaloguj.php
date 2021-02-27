@@ -78,10 +78,12 @@
 				$_SESSION['blad'] = '<span style="color:red">Nieprawidłowy login lub hasło!</span>';
 
                         // i przekierowujemy go spowrotem do index.php
-                        header('Location:index.php');
+                        header('Location:wypozyczalnia.php');
 			}
             }
+
             //zamknięcie połączenia z bazą jest obowiązkowe !!
             $polaczenie->close();
       }
+
  ?>
