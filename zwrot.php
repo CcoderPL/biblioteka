@@ -13,8 +13,6 @@
       mysqli_query($polaczenie, "SET CHARSET utf8");
       mysqli_query($polaczenie, "SET NAMES 'utf8' COLLATE 'utf8_polish_ci'");
 
-
-
       //pętla dodająca każdego checkboxa z wypożyczeniem z pliku index do tabeli wypożyczenie
       foreach($_POST['idzwroconejksiazki'] as $id)
       {
@@ -33,23 +31,6 @@
                   echo "Błąd nie udało się dodać nowego rekordu";
             }
       }
-
-
-
-
-            /*
-            //wyswietlenie 1 rekordu -- dramat
-            echo $_SESSION['user'];
-            $temp = $_SESSION['user'];
-            $tests = "SELECT userid FROM uzytkownicy WHERE user = $temp";
-            $result = mysqli_query($polaczenie, $tests) or die("Problemy z odczytem danych!");
-            while ($row = $result->fetch_assoc())
-            {
-                echo $row['userid']."<br>";
-          }*/
-
-
-
       mysqli_close($zwrocona, $usuniecieWpisuWwypozyczonych, $zwrot, $dataWypozyczenia);
       header('Location: wypozyczalnia.php');
       exit();

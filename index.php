@@ -41,7 +41,7 @@
             //wylogowania
                   if(isset($_SESSION['zalogowany']) && ($_SESSION['zalogowany']==true))
                   {
-                        echo "<div id='logowanie' style='margin-left:80%;'><a href='wypozyczalnia.php'>Wypożyczalnia</a> &nbsp;&nbsp; <a href='logout.php'>Wyloguj się!</a></div>";
+                        echo "<div id='logowanie' style='margin-left:80%;'><a href='wypozyczalnia.php'>Moje Konto</a> &nbsp;&nbsp; <a href='logout.php'>Wyloguj się!</a></div>";
                   }
                   else
                   {
@@ -123,7 +123,8 @@
                   //jeżeli jest ktoś zalogowany to wyświetl guzik - wypożyczam , jeżeli nie to wtedy wyświetl * z informacją o tym że musi się zalogować
                   if(isset($_SESSION['zalogowany']) && ($_SESSION['zalogowany']==true))
                   {
-                        echo "<br /> <input type='submit' name='zapis' value='wypożyczam'></form>";
+                        echo "<br />";
+                        echo "<input type='submit' name='zapis' value='wypożyczam' style='margin-left:75%'></form>";
                   }
                   else
                   {
