@@ -28,7 +28,7 @@
             }
             else
             {
-                  echo "Błąd nie udało się dodać nowego rekordu";
+                  echo "Błąd. Coś poszło nie tak, nie udało się zwrócić książki";
             }
       }
       mysqli_close($zwrocona, $usuniecieWpisuWwypozyczonych, $zwrot, $dataWypozyczenia);

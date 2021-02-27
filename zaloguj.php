@@ -11,7 +11,6 @@
 		header('Location: index.php');
 		exit();
 	}
-
       //za pomocą require once dołączamy plik dzięki któremu połączymy się z bazą MySQL
       //można użyć require albo include, ale przy include gdy włączanego pliku nie uda się otworzyć to wygeneruje tylko ostrzeżenie
       //natomiast require wyrzuci błąd krytyczny i dalsze działanie skryptu zostanie wstrzymane
@@ -85,6 +84,4 @@
             //zamknięcie połączenia z bazą jest obowiązkowe !!
             $polaczenie->close();
       }
-
-
  ?>

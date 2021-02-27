@@ -13,9 +13,8 @@
       mysqli_query($polaczenie, "SET CHARSET utf8");
       mysqli_query($polaczenie, "SET NAMES 'utf8' COLLATE 'utf8_polish_ci'");
 ?>
-
- <!DOCTYPE HTML>
- <html lang="pl" >
+<!DOCTYPE HTML>
+<html lang="pl" >
        <head>
              <meta charset="utf-8" />
              <title>Biblioteka Internetowa Pawła Mołka</title>
@@ -69,16 +68,6 @@
                         {
                               echo "Nie wypożyczałeś żadnej książki";
                         }
-                        /*
-                        //wyswietlenie 1 rekordu -- dramat
-                        echo $_SESSION['user'];
-                        $temp = $_SESSION['user'];
-                        $tests = "SELECT userid FROM uzytkownicy WHERE user = $temp";
-                        $result = mysqli_query($polaczenie, $tests) or die("Problemy z odczytem danych!");
-                        while ($row = $result->fetch_assoc())
-                        {
-                            echo $row['userid']."<br>";
-                      }*/
-                  ?>
+            ?>
       </body>
 </html>

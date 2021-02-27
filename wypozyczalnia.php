@@ -13,14 +13,13 @@
       mysqli_query($polaczenie, "SET CHARSET utf8");
       mysqli_query($polaczenie, "SET NAMES 'utf8' COLLATE 'utf8_polish_ci'");
 ?>
-
- <!DOCTYPE HTML>
- <html lang="pl" >
-       <head>
-             <meta charset="utf-8" />
-             <title>Biblioteka Internetowa Pawła Mołka</title>
-             <meta name="description" content="Masz wgląd do wszystkich dostępnych książek posiadanych przeze mnie" />
-             <meta name="keywords" content="książka, biblioteka, biblioteka online, Paweł Mołek, wypożyczalnia, książki" />
+<!DOCTYPE HTML>
+<html lang="pl" >
+      <head>
+            <meta charset="utf-8" />
+            <title>Biblioteka Internetowa Pawła Mołka</title>
+            <meta name="description" content="Masz wgląd do wszystkich dostępnych książek posiadanych przeze mnie" />
+            <meta name="keywords" content="książka, biblioteka, biblioteka online, Paweł Mołek, wypożyczalnia, książki" />
             <!-- teraz tag dla Internet explorera -->
             <meta http-http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
       </head>
