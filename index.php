@@ -40,101 +40,109 @@
             <link rel="stylesheet" href="css/style.css" type="text/css" />
       </head>
       <body>
-            <?php
-            //wyświetlanie opcji zależnie od stanu zalogowania - jeśli niezalogowany to wyświetl możliwość logowania, w przeciwnym razie możliwość
-            //wylogowania
-                  if(isset($_SESSION['zalogowany']) && ($_SESSION['zalogowany']==true))
-                  {
-                        echo "<div id='logowanie' style='margin-left:80%;'><a href='wypozyczalnia.php'>Moje Konto</a> &nbsp;&nbsp; <a href='logout.php'>Wyloguj się!</a></div>";
-                  }
-                  else
-                  {
-                        echo "<div id='logowanie' style='margin-left:90%;'><a href='logowanie.php'>Zaloguj się</a></div>";
-                  }
-                  //sprawdzanie czy taka zmienna jest ustawiona w sesji, jest to dla nowo wchodzących na stronę
-                  if(isset($_SESSION['blad']))	echo $_SESSION['blad'];
-            ?>
-          <br/><br/>
-          <form action='wypozyczenie.php' method='post'>
-                <table width="1000px" align="center" border="1">
-                      <tr>
-                            <th width="250px">Tytuł</th>
-                            <th width="250px">Autor</th>
-                            <th width="300px">Opis</th>
-                            <th width="100px">Dostępność</th>
-                            <th width="100px">Wypożycz</th>
-                      </tr>
-                      <?php
-                            //tworzenie klasy na wpis, co ułatwi przekazanie dalej oraz ewentualne wyświetlenie
-                              class ksiazka
+            <div id='container'>
+                  <div id='options'>
+                        <?php
+                        //wyświetlanie opcji zależnie od stanu zalogowania - jeśli niezalogowany to wyświetl możliwość logowania, w przeciwnym razie możliwość
+                        //wylogowania
+                              if(isset($_SESSION['zalogowany']) && ($_SESSION['zalogowany']==true))
                               {
-                                    public $title;
-                                    public $author;
-                                    public $description;
-                                    public $available;
-                                    public $bookid;
-                              };
-                              //wyświetlanie wyników gdy zmienna ile zwróciła przynajmniej 1 rząd
-                              if ($ile>=1)
-                              {
-                                    //utworzenie obiektu klasy
-                                    $ksiazka = new ksiazka();
-                                    //pętle wyświetlająca wszystkie zwrócone z zapytania wpisy
-                              	for ($i = 1; $i <= $ile; $i++)
-                              	{
-                                          //pobranie rzędu jako tablicę asocjacyjną
-                                          $row = mysqli_fetch_assoc($rezultatKsiazki);
-                                          //przypisanie zmiennych
-                                          $ksiazka->title = $row['title'];
-                                          $ksiazka->author = $row['author'];
-                                          $ksiazka->description = $row['description'];
-                                          $ksiazka->available = $row['available'];
-                                          $ksiazka->bookid = $row['bookid'];
-                                          //wyświetlenie pojedyńczego wiersza w tabeli w formie jaka jest poniżej
-                                          echo
-                                                "<tr>
-                                                      <td> ".$ksiazka->title." </td>
-                                                      <td> ".$ksiazka->author." </td>
-                                                      <td> ".$ksiazka->description." </td>
-                                                      <td>";
-                                                            if($ksiazka->available==1)
-                                                            {
-                                                                  echo "TAK";
-                                                            }
-                                                            else
-                                                            {
-                                                                  echo "NIE";
-                                                            }
-                                                      echo "</td>" ;
-                                                      //jeżeli użytkownik zalogowany i książka jest dostępna to wyświetl pole wyboru z wypożyczeniem
-                                                      //jeżeli nie jest zalogowany to wyświetl * do której przypisana jest informacja o tym, że musi się zalogować
-                                                      //aby móc wypożyczyć książkę
-                                                      echo "<td>";
-                                                      if(isset($_SESSION['zalogowany']) && ($_SESSION['zalogowany']==true) && $ksiazka->available==1)
-                                                      {
-                                                            echo "<input type='checkbox' name='idksiazki[]' value='$ksiazka->bookid' />";
-                                                      }
-                                                      elseif(!isset($_SESSION['zalogowany']))
-                                                      {
-                                                            echo " * ";
-                                                      }
-                                                echo "</td></tr>";
-                                    }
+                                    echo "<a href='wypozyczalnia.php'>Moje Konto</a> &nbsp;&nbsp; <a href='logout.php'>Wyloguj się!</a>";
                               }
+                              else
+                              {
+                                    echo "<a href='logowanie.php'>Zaloguj się</a>";
+                              }
+                              //sprawdzanie czy taka zmienna jest ustawiona w sesji, jest to dla nowo wchodzących na stronę
+                              if(isset($_SESSION['blad']))	echo $_SESSION['blad'];
                         ?>
-                  </table>
-                  <?php
-                  //jeżeli jest ktoś zalogowany to wyświetl guzik - wypożyczam , jeżeli nie to wtedy wyświetl * z informacją o tym że musi się zalogować
-                  if(isset($_SESSION['zalogowany']) && ($_SESSION['zalogowany']==true))
-                  {
-                        echo "<br />";
-                        echo "<input type='submit' name='zapis' value='wypożyczam' style='margin-left:75%'></form>";
-                  }
-                  else
-                  {
-                        echo "* Musisz być zalogowany aby móc wypożyczyć <br />";
-                  }
-                  ?>
-            </form>
+                  </div>
+                  <div id='content'>
+                      <form action='wypozyczenie.php' method='post'>
+                            <table width="1000px" align="center" border="1">
+                                  <tr>
+                                        <th width="250px">Tytuł</th>
+                                        <th width="250px">Autor</th>
+                                        <th width="300px">Opis</th>
+                                        <th width="100px">Dostępność</th>
+                                        <th width="100px">Wypożycz</th>
+                                  </tr>
+                                  <?php
+                                        //tworzenie klasy na wpis, co ułatwi przekazanie dalej oraz ewentualne wyświetlenie
+                                          class ksiazka
+                                          {
+                                                public $title;
+                                                public $author;
+                                                public $description;
+                                                public $available;
+                                                public $bookid;
+                                          };
+                                          //wyświetlanie wyników gdy zmienna ile zwróciła przynajmniej 1 rząd
+                                          if ($ile>=1)
+                                          {
+                                                //utworzenie obiektu klasy
+                                                $ksiazka = new ksiazka();
+                                                //pętle wyświetlająca wszystkie zwrócone z zapytania wpisy
+                                          	for ($i = 1; $i <= $ile; $i++)
+                                          	{
+                                                      //pobranie rzędu jako tablicę asocjacyjną
+                                                      $row = mysqli_fetch_assoc($rezultatKsiazki);
+                                                      //przypisanie zmiennych
+                                                      $ksiazka->title = $row['title'];
+                                                      $ksiazka->author = $row['author'];
+                                                      $ksiazka->description = $row['description'];
+                                                      $ksiazka->available = $row['available'];
+                                                      $ksiazka->bookid = $row['bookid'];
+                                                      //wyświetlenie pojedyńczego wiersza w tabeli w formie jaka jest poniżej
+                                                      echo
+                                                            "<tr>
+                                                                  <td> ".$ksiazka->title." </td>
+                                                                  <td> ".$ksiazka->author." </td>
+                                                                  <td> ".$ksiazka->description." </td>
+                                                                  <td>";
+                                                                        if($ksiazka->available==1)
+                                                                        {
+                                                                              echo "TAK";
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                              echo "NIE";
+                                                                        }
+                                                                  echo "</td>" ;
+                                                                  //jeżeli użytkownik zalogowany i książka jest dostępna to wyświetl pole wyboru z wypożyczeniem
+                                                                  //jeżeli nie jest zalogowany to wyświetl * do której przypisana jest informacja o tym, że musi się zalogować
+                                                                  //aby móc wypożyczyć książkę
+                                                                  echo "<td>";
+                                                                  if(isset($_SESSION['zalogowany']) && ($_SESSION['zalogowany']==true) && $ksiazka->available==1)
+                                                                  {
+                                                                        echo "<input type='checkbox' name='idksiazki[]' value='$ksiazka->bookid' />";
+                                                                  }
+                                                                  elseif(!isset($_SESSION['zalogowany']))
+                                                                  {
+                                                                        echo " * ";
+                                                                  }
+                                                            echo "</td></tr>";
+                                                }
+                                          }
+                                    ?>
+                              </table>
+                              <?php
+                              //jeżeli jest ktoś zalogowany to wyświetl guzik - wypożyczam , jeżeli nie to wtedy wyświetl * z informacją o tym że musi się zalogować
+                              if(isset($_SESSION['zalogowany']) && ($_SESSION['zalogowany']==true))
+                              {
+                                    echo "<br />";
+                                    echo "<input type='submit' name='zapis' value='wypożyczam' style='margin-left:75%'></form>";
+                              }
+                              else
+                              {
+                                    echo "* Musisz być zalogowany aby móc wypożyczyć <br />";
+                              }
+                              ?>
+                        </form>
+                  </div>
+                  <div id='footer'>
+                        <a href='http://pawelmolek.pl'>Paweł Mołek</a>
+                  </div>
+            </div>
       </body>
 </html>

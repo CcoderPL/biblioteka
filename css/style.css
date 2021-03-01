@@ -2,3 +2,31 @@ body
 {
       background-color: #365365;
 }
+
+#container
+{
+      width: 1000px;
+      height: 930px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+}
+
+#options
+{
+      margin-left: 75%;
+      height: 10%;
+}
+
+#content
+{
+      margin-left: auto;
+      margin-right: auto;
+      height: 80%;
+}
+
+#footer
+{
+      text-align: center;
+      height: 5%;
+}
