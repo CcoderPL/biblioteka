@@ -14,8 +14,8 @@ body
 
 #options
 {
-      margin-left: 75%;
-      height: 10%;
+      position: fixed;
+      right: 0;
 }
 
 #content

@@ -29,7 +29,7 @@
                   <div id='options'>
                         <?php
                               //opcja wylogowania
-                        	echo "<p>Witaj ".$_SESSION['user'].'! <a href="logout.php">Wyloguj się!</a> &nbsp;&nbsp; <a href="index.php">Strona Główna</a> &nbsp;&nbsp;<a href="history.php">Historia Wypożyczeń</a></p>';
+                        	echo "<a href='history.php'>Historia Wypożyczeń</a> &nbsp; <a href='index.php'>Strona Główna</a> &nbsp;<a href='logout.php'>Wyloguj się!</a>";
 
                               $zapytanieWypozyczenia = "SELECT wypozyczenia.borrowid, wypozyczenia.borrowdate, wypozyczenia.userid, wypozyczenia.bookid, ksiazki.bookid, ksiazki.title, uzytkownicy.user, uzytkownicy.userid
                               FROM wypozyczenia, ksiazki, uzytkownicy WHERE uzytkownicy.userid = wypozyczenia.userid AND
@@ -48,11 +48,11 @@
                                     // uporzadkować tabelę w indexie !!!!!!!!!!!!!!!!!
                                     if ($ile>=1)
                                     {
-                                          echo "<table width='600px' align='center' border='1'>
+                                          echo "<table width='700px' align='center' border='1'>
                                                <tr>
                                                       <th width='250px'>Tytuł</th>
                                                       <th width='250px'>Data wypożyczenia</th>
-                                                      <th width='100px'>Zwróć</th>
+                                                      <th width='200px'>Zwróć</th>
                                                </tr>";
                                           //pętle wyświetlająca wszystkie zwrócone z zapytania wpisy
                                           for ($i = 1; $i <= $ile; $i++)
@@ -94,7 +94,7 @@
                         </form>
                   </div>
                   <div id='footer'>
-                        <a href='http://pawelmolek.pl'>Paweł Mołek</a>
+                        <a href='http://pawelmolek.pl' target='_blank'>Paweł Mołek</a>
                   </div>
             </div>
       </body>

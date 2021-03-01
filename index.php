@@ -21,7 +21,7 @@
       mysqli_query($polaczenie, "SET CHARSET utf8");
       mysqli_query($polaczenie, "SET NAMES 'utf8' COLLATE 'utf8_polish_ci'");
       //zapytanie można wysłać za pomocą zmiennej jak w tym przypadku $zapytanie albo bezpośredno wpisać po przecinku
-      $zapytanieKsiazki = "SELECT ksiazki.bookid, ksiazki.title, ksiazki.author, ksiazki.description, ksiazki.available FROM ksiazki";
+      $zapytanieKsiazki = "SELECT ksiazki.bookid, ksiazki.title, ksiazki.author, ksiazki.available FROM ksiazki";
       //wysłanie zapytania do bazy, konieczne jest do tego korzystanie z zmiennej weryfikującej połączenie z bazą
       $rezultatKsiazki = mysqli_query($polaczenie, $zapytanieKsiazki);
       //zmienna potrzebna do wykonania pętli, sprawdza ile rzędów zwróciło zapytanie
@@ -47,7 +47,7 @@
                         //wylogowania
                               if(isset($_SESSION['zalogowany']) && ($_SESSION['zalogowany']==true))
                               {
-                                    echo "<a href='wypozyczalnia.php'>Moje Konto</a> &nbsp;&nbsp; <a href='logout.php'>Wyloguj się!</a>";
+                                    echo "<a href='wypozyczalnia.php'>Moje Konto</a> &nbsp;<a href='logout.php'>Wyloguj się!</a>";
                               }
                               else
                               {
@@ -59,11 +59,10 @@
                   </div>
                   <div id='content'>
                       <form action='wypozyczenie.php' method='post'>
-                            <table width="1000px" align="center" border="1">
+                            <table width="700px" align="center" border="1">
                                   <tr>
                                         <th width="250px">Tytuł</th>
                                         <th width="250px">Autor</th>
-                                        <th width="300px">Opis</th>
                                         <th width="100px">Dostępność</th>
                                         <th width="100px">Wypożycz</th>
                                   </tr>
@@ -73,7 +72,6 @@
                                           {
                                                 public $title;
                                                 public $author;
-                                                public $description;
                                                 public $available;
                                                 public $bookid;
                                           };
@@ -90,7 +88,6 @@
                                                       //przypisanie zmiennych
                                                       $ksiazka->title = $row['title'];
                                                       $ksiazka->author = $row['author'];
-                                                      $ksiazka->description = $row['description'];
                                                       $ksiazka->available = $row['available'];
                                                       $ksiazka->bookid = $row['bookid'];
                                                       //wyświetlenie pojedyńczego wiersza w tabeli w formie jaka jest poniżej
@@ -98,7 +95,6 @@
                                                             "<tr>
                                                                   <td> ".$ksiazka->title." </td>
                                                                   <td> ".$ksiazka->author." </td>
-                                                                  <td> ".$ksiazka->description." </td>
                                                                   <td>";
                                                                         if($ksiazka->available==1)
                                                                         {
@@ -141,7 +137,7 @@
                         </form>
                   </div>
                   <div id='footer'>
-                        <a href='http://pawelmolek.pl'>Paweł Mołek</a>
+                        <a href='http://pawelmolek.pl' target='_blank'>Paweł Mołek</a>
                   </div>
             </div>
       </body>

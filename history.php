@@ -29,53 +29,53 @@
                   <div id='options'>
                         <?php
                               //opcja wylogowania
-                        	echo "<p>Witaj ".$_SESSION['user'].'! <a href="logout.php">Wyloguj się!</a> &nbsp;&nbsp; <a href="index.php">Strona Główna</a> &nbsp;&nbsp;<a href="wypozyczalnia.php">Moje konto</a></p>';
+                        	echo "<a href='wypozyczalnia.php'>Moje Konto</a> &nbsp; <a href='index.php'>Strona Główna</a> &nbsp;<a href='logout.php'>Wyloguj się!</a>";
                   echo "</div>";
                   echo "<div id='content'>";
-                        $zapytanieHistorii = "SELECT zwroty.returndate, zwroty.borrowdate, zwroty.userid, zwroty.bookid, ksiazki.bookid, ksiazki.title, uzytkownicy.user, uzytkownicy.userid
-                        FROM zwroty, ksiazki, uzytkownicy WHERE uzytkownicy.userid = zwroty.userid AND
-                        ksiazki.bookid = zwroty.bookid AND zwroty.userid = {$_SESSION['userid']}";
+                              $zapytanieHistorii = "SELECT zwroty.returndate, zwroty.borrowdate, zwroty.userid, zwroty.bookid, ksiazki.bookid, ksiazki.title, uzytkownicy.user, uzytkownicy.userid
+                              FROM zwroty, ksiazki, uzytkownicy WHERE uzytkownicy.userid = zwroty.userid AND
+                              ksiazki.bookid = zwroty.bookid AND zwroty.userid = {$_SESSION['userid']}";
 
-                        //wysłanie zapytania do bazy, konieczne jest do tego korzystanie z zmiennej weryfikującej połączenie z bazą
-                        $rezultatHistorii = mysqli_query($polaczenie, $zapytanieHistorii);
+                              //wysłanie zapytania do bazy, konieczne jest do tego korzystanie z zmiennej weryfikującej połączenie z bazą
+                              $rezultatHistorii = mysqli_query($polaczenie, $zapytanieHistorii);
 
-                        //zmienna potrzebna do wykonania pętli, sprawdza ile rzędów zwróciło zapytanie
-                        $ile = mysqli_num_rows($rezultatHistorii);
-                              // uporzadkować tabelę w indexie !!!!!!!!!!!!!!!!!
-                              if ($ile>=1)
-                              {
-                                    echo "<table width='700px' align='center' border='1'>
-                                         <tr>
-                                                <th width='250px'>Tytuł</th>
-                                                <th width='250px'>Data wypożyczenia</th>
-                                                <th width='200px'>Data Zwrotu</th>
-                                         </tr>";
-                                    //pętle wyświetlająca wszystkie zwrócone z zapytania wpisy
-                                    for ($i = 1; $i <= $ile; $i++)
+                              //zmienna potrzebna do wykonania pętli, sprawdza ile rzędów zwróciło zapytanie
+                              $ile = mysqli_num_rows($rezultatHistorii);
+                                    // uporzadkować tabelę w indexie !!!!!!!!!!!!!!!!!
+                                    if ($ile>=1)
                                     {
-                                          //pobranie rzędu jako tablicę asocjacyjną
-                                          $row = mysqli_fetch_assoc($rezultatHistorii);
-                                          //przypisanie zmiennych
-                                          $title = $row['title'];
-                                          $borrowDate = $row['borrowdate'];
-                                          $returnDate = $row['returndate'];
-                                          echo
-                                                "<tr>
-                                                      <td> ".$title." </td>
-                                                      <td> ".$borrowDate." </td>
-                                                      <td> ".$returnDate." </td>
-                                                </tr>";
+                                          echo "<table width='700px' align='center' border='1'>
+                                               <tr>
+                                                      <th width='250px'>Tytuł</th>
+                                                      <th width='225px'>Data wypożyczenia</th>
+                                                      <th width='225px'>Data Zwrotu</th>
+                                               </tr>";
+                                          //pętle wyświetlająca wszystkie zwrócone z zapytania wpisy
+                                          for ($i = 1; $i <= $ile; $i++)
+                                          {
+                                                //pobranie rzędu jako tablicę asocjacyjną
+                                                $row = mysqli_fetch_assoc($rezultatHistorii);
+                                                //przypisanie zmiennych
+                                                $title = $row['title'];
+                                                $borrowDate = $row['borrowdate'];
+                                                $returnDate = $row['returndate'];
+                                                echo
+                                                      "<tr>
+                                                            <td> ".$title." </td>
+                                                            <td> ".$borrowDate." </td>
+                                                            <td> ".$returnDate." </td>
+                                                      </tr>";
+                                          }
+                                          echo "</table>";
                                     }
-                                    echo "</table>";
-                              }
-                              else
-                              {
-                                    echo "Nie wypożyczałeś żadnej książki";
-                              }
-                  ?>
+                                    else
+                                    {
+                                          echo "Nie wypożyczałeś żadnej książki";
+                                    }
+                        ?>
                   </div>
                   <div id='footer'>
-                        <a href='http://pawelmolek.pl'>Paweł Mołek</a>
+                        <a href='http://pawelmolek.pl' target='_blank'>Paweł Mołek</a>
                   </div>
             </div>
       </body>
