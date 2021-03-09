@@ -127,7 +127,7 @@
                               if(isset($_SESSION['zalogowany']) && ($_SESSION['zalogowany']==true))
                               {
                                     echo "<br />";
-                                    echo "<input type='submit' name='zapis' value='wypożyczam' style='margin-left:75%'></form>";
+                                    echo "<input type='submit' name='zapis' value='wypożyczam' id='ZwrotWypozyczenieButton'></form>";
                               }
                               else
                               {

@@ -74,7 +74,7 @@
                                           }
                                           echo "</table>";
                                           echo "<br/>";
-                                          echo "<input style='margin-left:75%' type='submit' name='zapis' value='Zwracam'/>";
+                                          echo "<input type='submit' id='ZwrotWypozyczenieButton' name='zapis' value='Zwracam'/>";
                                     }
                                     else
                                     {
