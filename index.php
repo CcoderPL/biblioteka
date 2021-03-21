@@ -21,7 +21,7 @@
       mysqli_query($polaczenie, "SET CHARSET utf8");
       mysqli_query($polaczenie, "SET NAMES 'utf8' COLLATE 'utf8_polish_ci'");
       //zapytanie można wysłać za pomocą zmiennej jak w tym przypadku $zapytanie albo bezpośredno wpisać po przecinku
-      $zapytanieKsiazki = "SELECT ksiazki.bookid, ksiazki.title, ksiazki.author, ksiazki.available FROM ksiazki";
+      $zapytanieKsiazki = "SELECT ksiazki.bookid, ksiazki.title, ksiazki.author, ksiazki.available FROM ksiazki ORDER BY ksiazki.title ASC";
       //wysłanie zapytania do bazy, konieczne jest do tego korzystanie z zmiennej weryfikującej połączenie z bazą
       $rezultatKsiazki = mysqli_query($polaczenie, $zapytanieKsiazki);
       //zmienna potrzebna do wykonania pętli, sprawdza ile rzędów zwróciło zapytanie
@@ -58,6 +58,32 @@
                         ?>
                   </div>
                   <div id='content'>
+                        <form action="index.php" method="post">
+                              <label for="sort"> Sortuj wg. </label>
+                              <select id="sortowanie" name="sort">
+                                    <option value="a">wg. Autora</option>
+                                    <option value="t" selected>wg. Tytułu</option>
+                                    <option value="d">wg. Dostępności</option>
+                              </select>
+                              <input type='submit' name='sortowanie' value='Ok' id='ZwrotWypozyczenieButton'>
+                        </form>
+                        <?php
+                              //opcje sortowania
+                              if(isset($_POST['sort']) && $_POST['sort']=="a")
+                              {
+                                    $zapytanieKsiazki = "SELECT ksiazki.bookid, ksiazki.title, ksiazki.author, ksiazki.available FROM ksiazki ORDER BY ksiazki.author ASC";
+                              }
+                              elseif (isset($_POST['sort']) && $_POST['sort']=="t")
+                              {
+                                    $zapytanieKsiazki = "SELECT ksiazki.bookid, ksiazki.title, ksiazki.author, ksiazki.available FROM ksiazki ORDER BY ksiazki.title ASC";
+                              }
+                              elseif (isset($_POST['sort']) && $_POST['sort']=="d")
+                              {
+                                    $zapytanieKsiazki = "SELECT ksiazki.bookid, ksiazki.title, ksiazki.author, ksiazki.available FROM ksiazki ORDER BY ksiazki.available DESC";
+                              }
+                              $rezultatKsiazki = mysqli_query($polaczenie, $zapytanieKsiazki);
+                        ?>
+                        <br /><br />
                       <form action='wypozyczenie.php' method='post'>
                             <table width="700px" align="center" border="1">
                                   <tr>
@@ -75,6 +101,7 @@
                                                 public $available;
                                                 public $bookid;
                                           };
+
                                           //wyświetlanie wyników gdy zmienna ile zwróciła przynajmniej 1 rząd
                                           if ($ile>=1)
                                           {
