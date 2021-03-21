@@ -58,32 +58,35 @@
                         ?>
                   </div>
                   <div id='content'>
-                        <form action="index.php" method="post">
+                        <form action="index.php" method="get">
                               <label for="sort"> Sortuj wg. </label>
                               <select id="sortowanie" name="sort">
-                                    <option value="a">wg. Autora</option>
-                                    <option value="t" selected>wg. Tytułu</option>
-                                    <option value="d">wg. Dostępności</option>
+                                    <option value="author">wg. Autora</option>
+                                    <option value="title" selected>wg. Tytułu</option>
+                                    <option value="available">wg. Dostępności</option>
                               </select>
-                              <input type='submit' name='sortowanie' value='Ok' id='ZwrotWypozyczenieButton'>
+                              <input type='submit' value='Ok' id='ZwrotWypozyczenieButton'>
                         </form>
                         <?php
                               //opcje sortowania
-                              if(isset($_POST['sort']) && $_POST['sort']=="a")
+                              if(isset($_GET['sort']))
                               {
-                                    $zapytanieKsiazki = "SELECT ksiazki.bookid, ksiazki.title, ksiazki.author, ksiazki.available FROM ksiazki ORDER BY ksiazki.author ASC";
+                                    if($_GET['sort']=="author")
+                                    {
+                                          $zapytanieKsiazki = "SELECT ksiazki.bookid, ksiazki.title, ksiazki.author, ksiazki.available FROM ksiazki ORDER BY ksiazki.author ASC";
+                                    }
+                                    elseif ($_GET['sort']=="title")
+                                    {
+                                          $zapytanieKsiazki = "SELECT ksiazki.bookid, ksiazki.title, ksiazki.author, ksiazki.available FROM ksiazki ORDER BY ksiazki.title ASC";
+                                    }
+                                    elseif ($_GET['sort']=="available")
+                                    {
+                                          $zapytanieKsiazki = "SELECT ksiazki.bookid, ksiazki.title, ksiazki.author, ksiazki.available FROM ksiazki ORDER BY ksiazki.available DESC";
+                                    }
+                                    $rezultatKsiazki = mysqli_query($polaczenie, $zapytanieKsiazki);
                               }
-                              elseif (isset($_POST['sort']) && $_POST['sort']=="t")
-                              {
-                                    $zapytanieKsiazki = "SELECT ksiazki.bookid, ksiazki.title, ksiazki.author, ksiazki.available FROM ksiazki ORDER BY ksiazki.title ASC";
-                              }
-                              elseif (isset($_POST['sort']) && $_POST['sort']=="d")
-                              {
-                                    $zapytanieKsiazki = "SELECT ksiazki.bookid, ksiazki.title, ksiazki.author, ksiazki.available FROM ksiazki ORDER BY ksiazki.available DESC";
-                              }
-                              $rezultatKsiazki = mysqli_query($polaczenie, $zapytanieKsiazki);
                         ?>
-                        <br /><br />
+                        <br />
                       <form action='wypozyczenie.php' method='post'>
                             <table width="700px" align="center" border="1">
                                   <tr>
